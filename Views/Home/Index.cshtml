@@ -1,0 +1,54 @@
+﻿@model List<ContactApp.Models.Contact>
+
+@{
+    ViewData["Title"] = "Contact List";
+}
+
+<a class="btn btn-primary" asp-controller="Contact" asp-action="Add">Add Contact</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+
+            <th>@(Model.Any() ? Html.DisplayNameFor(m => m[0].Email) : "Email")</th>
+            <th>Phone Number</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="5" class="text-center">No contacts available.</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="Contact" asp-action="Edit" asp-route-id="@item.ContactId" asp-route-slug="@item.Slug">
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-controller="Contact" asp-action="Edit" asp-route-id="@item.ContactId" asp-route-slug="@item.Slug">
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </a>
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
+                    <td>
+                        <a asp-controller="Contact" asp-action="Details" asp-route-id="@item.ContactId">Details</a>
+                        <a asp-controller="Contact" asp-action="Delete" asp-route-id="@item.ContactId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
